@@ -1,32 +1,67 @@
 var buttonColors=["red","blue","green","yellow"];
 var gamePattern=[];
-var randomChosenColor;
+var userClickedPattern=[];
+var level=0;
+var detectKeypress=false;
+
+
+$(document).keypress(function(){
+   //console.log("function called");
+if (detectKeypress==true)
+{
+$("#level-title").text("Level"+level);
+nextSequence();
+started=true;
+}
+});
+
+//button click function
+
+$(".btn").click(function()
+{
+   var userChosenColor = $(this).attr("id");
+   userClickedPattern.push(userChosenColor);
+   playSound(userChosenColor);
+   animatePress(userChosenColor);
+});
+
+//nextSequence function
+
 function nextSequence()
 {
-    var randomNumber=Math.floor(Math.random()*4);
-    // if(randomNumber==0)
-    // {
-    //     randomChosenColor = buttonColors[0];
-    //     gamePattern.push(randomChosenColor);
-    // }
-    // else if(randomNumber==1)
-    // {
-    //     randomChosenColor = buttonColors[1];
-    //     gamePattern.push(randomChosenColor);
-    // }
-    // else if(randomNumber==2)
-    // {
-    //     randomChosenColor = buttonColors[2];
-    //     gamePattern.push(randomChosenColor);
-    // }
-    // else{
-    //     randomChosenColor=buttonColors[3]; 
-    //     gamePattern.push(randomChosenColor); 
-    //  }
-   // console.log(randomChosenColor);
-   randomChosenColor = buttonColors[randomNumber];
+   level=level+1;
+   $("#level-title").text("Level " + level);
+   var randomNumber=Math.floor(Math.random()*4);
+   var randomChosenColor = buttonColors[randomNumber];
    gamePattern.push(randomChosenColor);
-   //console.log(gamePattern);
+   
+   $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
+   playSound(randomChosenColor);
    
 }
-nextSequence();
+
+//play sound function
+function playSound(name)
+{
+   //$("#green").fadeOut(100).fadeIn(100).fadeIn(100);
+   var audio = new Audio("sounds/" + name + ".mp3");
+  audio.play();
+}
+
+    
+
+function animatePress(currentColor)
+{
+   $("#"+currentColor).addClass("pressed");
+
+   setTimeout(function(){
+      $("#"+currentColor).removeClass("pressed");
+
+   },100)
+
+};
+
+   
+
+
+//nextSequence();
