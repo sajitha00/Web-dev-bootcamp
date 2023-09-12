@@ -13,14 +13,18 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  res.render("index.ejs",);
 });
 
 app.post("/recipe", (req, res) => {
-  //Step 3: Write your code here to make this behave like the solution website.
-  //res.render("index.ejs",{show:enable})
   //console.log(req.body);
-  
+  if (req.body.choice=='chicken')
+  {
+    res.render(recipeJSON[0]);
+
+  }
+
+  //Step 3: Write your code here to make this behave like the solution website.
   //Step 4: Add code to views/index.ejs to use the recieved recipe object.
 });
 
